@@ -19,6 +19,8 @@ class Ballot(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer)
     candidate_id = db.Column(db.Integer)
+    image_url = db.Column(db.String(255))
+    transaction_id = db.Column(db.String)
     created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     
     
@@ -27,6 +29,8 @@ class Ballot(db.Model):
             'id' : self.id,
             'user_id' : self.user_id,
             'candidate_id' : self.candidate_id,
+            'image_url' : self.image_url,
+            'transaction_id' : self.transaction_id,
             'created' : str(self.created)
         }
         return serialized
@@ -35,6 +39,8 @@ class Ballot(db.Model):
         #self.id  = json.get('id', None)
         self.user_id = json.get('user_id',self.user_id)
         self.candidate_id = json.get('candidate_id',self.candidate_id)
+        self.image_url = json.get('image_url',self.image_url)
+        self.transaction_id = json.get('transaction_id',self.transaction_id)
         return self
     
 
