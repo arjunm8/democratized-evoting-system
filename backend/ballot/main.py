@@ -13,7 +13,9 @@ from flask import Flask, request
 from models import db, Ballot
 import json
 import traceback
+import requests
 
+blockchain_service_url = "http://127.0.0.1:5006/blockchain/vote"
 
 
 app = Flask(__name__)
@@ -27,7 +29,7 @@ with app.app_context():
 
 
 @app.route('/ballot', methods=["POST"])
-def create_user():
+def vote():
     '''
     create a new poll.
     callers: all users
@@ -35,6 +37,9 @@ def create_user():
     data = request.form.to_dict()
     ballot = Ballot()
     try:
+        payload = {'candidate_id': data["candidate_id"]}
+        response = requests.request("POST", blockchain_service_url, data = payload)
+        data["transaction_id"] = json.loads(response.text)["receipt"]
         ballot.deserialize(json=data)
         ballot.save()
         return json.dumps(ballot.serialize()),200
@@ -44,10 +49,10 @@ def create_user():
 
 
 @app.route('/ballot/<int:id>', methods=["GET"])
-def get_user(id):
+def get_ballot_object(id):
     '''
     get ballot object by id
-    callers: all users
+    callers: system
     '''
     ballot = Ballot.query.filter(Ballot.id == id).first()
     if ballot:
@@ -72,4 +77,4 @@ def server_error(e):
 
 
 if __name__ =="__main__":
-    app.run(debug=True,port=5003)
+    app.run(debug=True,host="0.0.0.0",port=5003)

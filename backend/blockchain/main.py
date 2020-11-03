@@ -1,9 +1,11 @@
 import json
 from flask import Flask, request, logging
 from web3 import Web3
+#run 
 from solcx import compile_files
 from models import db, Candidate
 
+solcx.install_solc("0.6.4")
 
 
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))

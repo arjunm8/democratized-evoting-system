@@ -68,6 +68,10 @@ class Candidate(db.Model):
     created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     
     
+    def get_str_id(self):
+        return str(self.id)
+
+    
     def serialize(self):
         serialized = {
             'id' : self.id,

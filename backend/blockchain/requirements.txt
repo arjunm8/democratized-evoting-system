@@ -1,2 +1,3 @@
 Flask
 Web3==5.1.0
+solcx 
