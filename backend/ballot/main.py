@@ -15,7 +15,7 @@ import json
 import traceback
 import requests
 
-blockchain_service_url = "http://0.0.0.0:5006/blockchain/vote"
+blockchain_service_url = "http://0.0.0.0:5006/blockchain"
 notification_service_url = "http://0.0.0.0:5005/notification"
 ballot_service_url = "http://192.168.0.102:5003"
 
@@ -40,7 +40,7 @@ def vote():
     ballot = Ballot()
     try:
         payload = {'candidate_id': data["candidate_id"]}
-        response = requests.request("POST", blockchain_service_url, data = payload)
+        response = requests.request("POST", blockchain_service_url+"/vote", data = payload)
         data["transaction_id"] = json.loads(response.text)["receipt"]
         ballot.deserialize(json=data)
         ballot.save()
@@ -88,8 +88,15 @@ def short_get_ballot_object(id):
     ballot = Ballot.query.filter(Ballot.id == id).first()
     if ballot:
         ballot = ballot.serialize()
+        
+        response = requests.request("GET", blockchain_service_url+"/results");
+        
+        if response:
+            results = json.loads(response.text)["result"]
+    
         return render_template('layouts/index.html',
                                voter_data=ballot,
+                               results=results
                                )
     else:
         return "not found",404

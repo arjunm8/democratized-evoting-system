@@ -12,6 +12,7 @@
 
 <div class="container">
   <h2>Your Unique Record and Transaction ID are as follows:</h2>
+<div class="table-responsive">
   <table class="table table-hover">
     <thead>
       <tr>
@@ -29,7 +30,33 @@
       </tr>
     </tbody>
   </table>
+  </div>
+
+
+  <h2>Current Ballot State (on Blockchain):</h2>
+  <div class="table-responsive">
+  <table class="table table-hover ">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Candidate</th>
+        <th>Vote Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in results %}
+             <tr>
+               <td> {{ result.id }} </td>
+                 <th> {{ result.name }} </th>
+                 <td> {{ result.votes }} </td>
+             </tr>
+             {% endfor %}
+      </tr>
+    </tbody>
+  </table>
 </div>
+</div>
+
 
 </body>
 <footer>
