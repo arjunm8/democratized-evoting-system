@@ -38,6 +38,7 @@ dependencies {
     compile 'dev.dworks.libs:volleyplus:+'
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'androidx.biometric:biometric:1.0.0-alpha03'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 
 }

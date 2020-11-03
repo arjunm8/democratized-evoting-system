@@ -30,7 +30,15 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import static com.technarcs.ccsms.dvoting.MainActivity.BALLOT_SERVICE_URL;
+import static com.technarcs.ccsms.dvoting.MainActivity.TXN_ID;
+import static com.technarcs.ccsms.dvoting.MainActivity.USER_ID;
+import static com.technarcs.ccsms.dvoting.MainActivity.USER_SERVICE_URL;
+import static com.technarcs.ccsms.dvoting.MainActivity.queue;
+import static com.technarcs.ccsms.dvoting.login.USER_PHONE;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -75,7 +83,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             .setPositiveButton("Yes, I am sure!", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     postVote(candidate_ids.get(position));
-                                    Toast.makeText(mContext, "Posted", Toast.LENGTH_SHORT).show();
                                 }
                             });
                     AlertDialog alert = builder.create();
@@ -89,8 +96,54 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return candidate_names.size();
     }
 
-    public void postVote(String candidate_id){
+    private void postVote(final String candidate_id){
+        String url = BALLOT_SERVICE_URL+"/ballot";
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                        try {
+                            JSONObject obj = new JSONObject(response);
+                            TXN_ID = obj.getString("transaction_id");
+                            Toast.makeText(mContext, "Vote Casted to blockchain, txn id: "+TXN_ID, Toast.LENGTH_LONG).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }finally {
+                            /*
+                            NavHostFragment.findNavController(FirstFragment.this)
+                                    .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                             */
+                        }
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                        Toast.makeText(mContext, "Vote Posting failed: "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("candidate_id", candidate_id);
+                params.put("user_id", USER_ID);
+                return params;
+            }
+        };
+        postRequest.setShouldCache(false);
+
+        queue.add(postRequest);
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView candidate_name;

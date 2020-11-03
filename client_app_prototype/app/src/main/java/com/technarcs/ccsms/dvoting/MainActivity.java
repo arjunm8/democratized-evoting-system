@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public static RequestQueue queue;
 
     public static String USER_ID;
+    public static String TXN_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

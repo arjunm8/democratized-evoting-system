@@ -90,7 +90,7 @@ public class SecondFragment extends Fragment {
 
                 candidate_names.add(contract.getString("name"));
                 candidate_ids.add(contract.getString("id"));
-                images.add(MEDIA_SERVICE_URL+"/"+contract.getString("image"));
+                images.add(MEDIA_SERVICE_URL+"/media/"+contract.getString("image_url"));
 
             }catch (Exception e){
                 Log.e("error parsing json object",e.toString());
