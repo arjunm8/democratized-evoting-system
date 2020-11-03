@@ -18,7 +18,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
 
     //@TODO autodetect constituency based on location
-    
+
     public static String ip = "http://192.168.0.102";
     public static String USER_SERVICE_URL = ip+":5000";
     public static String VERIFICATION_SERVICE_URL = ip+":5001";
