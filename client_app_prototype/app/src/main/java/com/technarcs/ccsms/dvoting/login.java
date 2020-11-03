@@ -30,7 +30,6 @@ public class login extends AppCompatActivity {
         // [START auth_fui_create_intent]
         // Choose authentication providers
         List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.AnonymousBuilder().build(),
                 new AuthUI.IdpConfig.PhoneBuilder().build());
 
         // Create and launch sign-in intent
@@ -38,6 +37,7 @@ public class login extends AppCompatActivity {
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
+                        .setTheme(R.style.AppTheme)
                         .build(),
                 RC_SIGN_IN);
         // [END auth_fui_create_intent]
