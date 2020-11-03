@@ -10,12 +10,14 @@ import logging
 # Imports the Google Cloud client library
 
 from flask import Flask, request
-from models import db, Ballot,Candidate
+from models import db, Ballot,Candidate, User
 import json
 import traceback
 import requests
 
 blockchain_service_url = "http://0.0.0.0:5006/blockchain/vote"
+notification_service_url = "http://0.0.0.0:5005/notification"
+ballot_service_url = "http://192.168.0.102:5003"
 
 
 app = Flask(__name__)
@@ -42,7 +44,22 @@ def vote():
         data["transaction_id"] = json.loads(response.text)["receipt"]
         ballot.deserialize(json=data)
         ballot.save()
-        return json.dumps(ballot.serialize()),200
+        response_object = ballot.serialize()
+
+        try:
+            payload = {
+                    'number': User.query.filter(
+                            User.id==response_object["user_id"]
+                            ).first().phone,
+                    'link': ballot_service_url+"/"+str(response_object["id"])
+                    }
+            
+            requests.request("POST", notification_service_url, data = payload)
+        except:
+            traceback.print_exc()
+            pass
+        
+        return json.dumps(response_object),200
     except Exception as e:
         traceback.print_exc()
         return str(e),500
@@ -61,6 +78,19 @@ def get_ballot_object(id):
     else:
         return "",404
 
+
+@app.route('/<int:id>', methods=["GET"])
+def short_get_ballot_object(id):
+    '''
+    get ballot object by id
+    callers: system
+    '''
+    ballot = Ballot.query.filter(Ballot.id == id).first()
+    if ballot:
+        ballot = ballot.serialize()
+        return json.dumps(ballot)
+    else:
+        return "",404
 
 
 @app.route('/candidates', methods=["GET"])

@@ -14,7 +14,7 @@ import datetime
 db = SQLAlchemy()
 
 
-class Ballot(db.Model): 
+class Ballot(db.Model):
     # table names are autoamtically identified by converting class name to snakecase
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer)
@@ -22,8 +22,8 @@ class Ballot(db.Model):
     image_url = db.Column(db.String(255))
     transaction_id = db.Column(db.String)
     created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    
-    
+
+
     def serialize(self):
         serialized = {
             'id' : self.id,
@@ -42,36 +42,36 @@ class Ballot(db.Model):
         self.image_url = json.get('image_url',self.image_url)
         self.transaction_id = json.get('transaction_id',self.transaction_id)
         return self
-    
+
 
     def save(self, commit=True):
             db.session.add(self)
             if(commit):
                 db.session.commit()
             return self
-        
-        
+
+
     def delete(self, commit=True):
         db.session.delete(self)
         if(commit):
             db.session.commit()
         return self
-    
 
 
-class Candidate(db.Model): 
+
+class Candidate(db.Model):
     # table names are autoamtically identified by converting class name to snakecase
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(255))
     image_url = db.Column(db.String(255))
     constituency_id = db.Column(db.Integer)
     created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    
-    
+
+
     def get_str_id(self):
         return str(self.id)
 
-    
+
     def serialize(self):
         serialized = {
             'id' : self.id,
@@ -88,28 +88,28 @@ class Candidate(db.Model):
         self.image_url = json.get('image_url',self.image_url)
         self.constituency_id = json.get('constituency_id',self.constituency_id)
         return self
-    
+
 
     def save(self, commit=True):
             db.session.add(self)
             if(commit):
                 db.session.commit()
             return self
-        
-        
+
+
     def delete(self, commit=True):
         db.session.delete(self)
         if(commit):
             db.session.commit()
         return self
-    
 
 
-class Constituency(db.Model): 
+
+class Constituency(db.Model):
     # table names are autoamtically identified by converting class name to snakecase
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(255), nullable=False)    
-    
+    name = db.Column(db.String(255), nullable=False)
+
     def serialize(self):
         serialized = {
             'id' : self.id,
@@ -121,19 +121,59 @@ class Constituency(db.Model):
         #self.id  = json.get('id', None)
         self.name = json.get('name', self.name)
         return self
-    
+
 
     def save(self, commit=True):
             db.session.add(self)
             if(commit):
                 db.session.commit()
             return self
-        
-        
+
+
     def delete(self, commit=True):
         db.session.delete(self)
         if(commit):
             db.session.commit()
         return self
-    
-    
+
+
+#TODO delink this from ballot service
+class User(db.Model):
+    # table names are autoamtically identified by converting class name to snakecase
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(255))
+    phone = db.Column(db.String(13),unique=True)
+    constituency_id = db.Column(db.Integer)
+    created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+
+    def serialize(self):
+        serialized = {
+            'id' : self.id,
+            'name' : self.name,
+            'phone' : self.phone,
+            'constituency_id' : self.constituency_id,
+            'created' : str(self.created)
+        }
+        return serialized
+
+    def deserialize(self, json):
+        #self.id  = json.get('id', None)
+        self.name = json.get('name', self.name)
+        self.phone = json.get('phone',self.phone)
+        self.constituency_id = json.get('constituency_id',self.constituency_id)
+        return self
+
+
+    def save(self, commit=True):
+            db.session.add(self)
+            if(commit):
+                db.session.commit()
+            return self
+
+
+    def delete(self, commit=True):
+        db.session.delete(self)
+        if(commit):
+            db.session.commit()
+        return self

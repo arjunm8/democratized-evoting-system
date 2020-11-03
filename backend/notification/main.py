@@ -38,8 +38,9 @@ def send_notifcation():
       'variables': '{#FF#}',
     }
     try:
-        data['numbers'] = request.form.get("number")
+        data['numbers'] = request.form.get("number")[3:]
         data['variables_values'] = request.form.get("link")
+        print(data)
         response = requests.post('https://www.fast2sms.com/dev/bulk', headers=headers, data=data)
         if response.status_code == 200:
             return "",200
