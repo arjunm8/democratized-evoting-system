@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FirstFragment">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/docverifycard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHeight_percent="0.25"
+            android:layout_margin="12dp"
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/docanim"
+                    android:layout_width="0dp"
+                    app:layout_constraintWidth_percent="0.5"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:layout_weight="4"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_url="https://assets2.lottiefiles.com/packages/lf20_uTJItb.json" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="1. Upload Voter ID"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/docanim"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/faceverifycard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/docverifycard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHeight_percent="0.25"
+            android:layout_margin="12dp"
+            app:cardBackgroundColor="@color/colorGrey"
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/verify1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/faceanim"
+                    android:layout_width="0dp"
+                    app:layout_constraintWidth_percent="0.5"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:layout_weight="4"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_url="https://assets1.lottiefiles.com/packages/lf20_roRZFD.json" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="2. Take a Selfie"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/faceanim"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/authverifycard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/faceverifycard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHeight_percent="0.25"
+            android:layout_margin="12dp"
+            app:cardBackgroundColor="@color/colorGrey"
+            >
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/authanim"
+                    android:layout_width="0dp"
+                    app:layout_constraintWidth_percent="0.5"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter"
+                    android:layout_weight="4"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_url="https://assets7.lottiefiles.com/datafiles/uwnAj2cajX1eZ34/data.json" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="3. Get Authorized"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/authanim"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/button_first"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.15"
+        android:layout_width="match_parent"
+        android:background="@color/colorGrey"
+        android:padding="30dp"
+        android:text="@string/next"
+        android:textSize="24sp"
+        android:clickable="false"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
