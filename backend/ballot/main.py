@@ -9,7 +9,7 @@ Created on Sat Sep 12 11:06:59 2020
 import logging
 # Imports the Google Cloud client library
 
-from flask import Flask, request
+from flask import Flask, request,render_template,jsonify
 from models import db, Ballot,Candidate, User
 import json
 import traceback
@@ -88,15 +88,17 @@ def short_get_ballot_object(id):
     ballot = Ballot.query.filter(Ballot.id == id).first()
     if ballot:
         ballot = ballot.serialize()
-        return json.dumps(ballot)
+        return render_template('layouts/index.html',
+                               voter_data=ballot,
+                               )
     else:
-        return "",404
+        return "not found",404
 
 
 @app.route('/candidates', methods=["GET"])
-def list_constituencies():
+def list_candidates():
     '''
-    list available constituencies
+    list candidates
     callers: all users
     '''
     candidates = Candidate.query.all()
