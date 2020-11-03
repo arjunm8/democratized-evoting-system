@@ -2,6 +2,7 @@ import json
 from flask import Flask, request, logging
 from web3 import Web3
 #run 
+import solcx
 from solcx import compile_files
 from models import db, Candidate
 
