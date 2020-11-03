@@ -36,7 +36,7 @@ def check_user():
     phone = request.args.get("phone")
     user = User.query.filter(User.phone == phone).first()
     if user:
-        user = user.serialize() 
+        user = user.serialize()
         return json.dumps(user)
     else:
         return "",404
@@ -112,7 +112,6 @@ def list_constituencies():
     list available constituencies
     callers: all users
     '''
-    #TODO use google maps
     constituencies = Constituency.query.all()
 
     if constituencies:

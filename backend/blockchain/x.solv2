@@ -1,0 +1,52 @@
+pragma solidity ^0.7.4;
+
+contract  Election {
+
+    struct Candidate {
+      bytes32 name;
+      uint voteCount;
+    }
+
+    struct Voter {
+      //string ballot_id;
+      bool voted;
+      uint voteIndex;
+      uint authorized;
+    }
+
+    address public owner;
+    mapping(address => Voter) public voters;
+    Candidate[] public candidates;
+
+    event ElectionResult(bytes32 name, uint voteCount);
+
+
+    constructor(bytes32[] memory candidateNames) public {
+      for(uint i=0; i<candidateNames.length; i++){
+        candidates.push(Candidate(candidateNames[i],0));
+      }
+    }
+
+
+    function authorize(address voter) public{
+      require(msg.sender == owner);
+      require(!voters[voter].voted);
+      voters[voter] = Voter(false,0,1);
+    }
+
+    function vote(uint voteIndex) public{
+      require(!voters[msg.sender].voted);
+
+      voters[msg.sender].voted = true;
+      voters[msg.sender].voteIndex = voteIndex;
+
+      candidates[voteIndex].voteCount += voters[msg.sender].authorized;
+    }
+
+    function stats() public{
+      for(uint i=0; i<candidates.length; i++){
+        emit ElectionResult(candidates[i].name,candidates[i].voteCount);
+      }
+    }
+
+}
