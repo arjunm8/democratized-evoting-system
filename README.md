@@ -43,4 +43,5 @@ $ python3 main.py
 1. run `ifconfig` or `ipconfig` to get your local ip
 2. Install android studio
 3. Install android SDK
-4. Run android studio and build project
+4. Run android studio and select "import existing project"
+5. build and run on a test device or emulator
