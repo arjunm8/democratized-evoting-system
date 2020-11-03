@@ -105,6 +105,7 @@ public class SecondFragment extends Fragment {
                     candidate_names,
                     candidate_ids,
                     images,
+                    NavHostFragment.findNavController(SecondFragment.this),
                     getContext()
             );
             recyclerView.setAdapter(adapter);

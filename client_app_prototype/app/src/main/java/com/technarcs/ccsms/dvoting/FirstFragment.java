@@ -29,7 +29,6 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import static android.content.Context.USER_SERVICE;
 import static com.technarcs.ccsms.dvoting.MainActivity.USER_ID;
 import static com.technarcs.ccsms.dvoting.MainActivity.USER_SERVICE_URL;
 import static com.technarcs.ccsms.dvoting.MainActivity.queue;
@@ -74,7 +73,7 @@ public class FirstFragment extends Fragment {
         view.findViewById(R.id.docverifycard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getContext(),image_uploader.class);
+                Intent i = new Intent(getContext(), ImageUploader.class);
                 startActivity(i);
                 docv = true;
             }
@@ -84,7 +83,7 @@ public class FirstFragment extends Fragment {
         face.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getContext(),image_uploader.class);
+                Intent i = new Intent(getContext(), ImageUploader.class);
                 startActivity(i);
                 facev = true;
             }
@@ -138,12 +137,12 @@ public class FirstFragment extends Fragment {
                         try {
                             JSONObject obj = new JSONObject(response);
                             USER_ID = obj.getString("id");
-                            Toast.makeText(getActivity(), "User Created: "+obj.getString("id"), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "User Created: "+obj.getString("id"), Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }finally {
                             NavHostFragment.findNavController(FirstFragment.this)
-                                    .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                                    .navigate(R.id.action_FirstFragment_to_TutFragment);
                         }
 
                     }

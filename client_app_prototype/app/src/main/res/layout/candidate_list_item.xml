@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginEnd="4dp"
-            android:backgroundTint="@color/color_blue"
+            android:background="@color/color_blue"
             android:drawableRight="@drawable/ic_baseline_play_arrow_24"
             android:text="Vote"
             android:textColor="#fff"

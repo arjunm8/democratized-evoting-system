@@ -27,7 +27,7 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         </activity>
-        <activity android:name=".image_uploader"
+        <activity android:name=".ImageUploader"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".MainActivity"

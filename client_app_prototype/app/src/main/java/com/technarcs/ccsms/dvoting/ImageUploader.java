@@ -36,7 +36,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import static com.technarcs.ccsms.dvoting.MainActivity.MEDIA_SERVICE_URL;
 import static com.technarcs.ccsms.dvoting.MainActivity.queue;
 
-public class image_uploader extends AppCompatActivity {
+public class ImageUploader extends AppCompatActivity {
 
     private static final int REQUEST_CAPTURE_IMAGE = 100;
 
