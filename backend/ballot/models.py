@@ -71,7 +71,7 @@ class Candidate(db.Model):
     def serialize(self):
         serialized = {
             'id' : self.id,
-            'name' : self.user_id,
+            'name' : self.name,
             'image_url' : self.image_url,
             'constituency_id' : self.constituency_id,
             'created' : str(self.created)

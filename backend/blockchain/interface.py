@@ -51,17 +51,24 @@ with app.app_context():
 
 
 # api to set new user every api call
-@app.route("/blockchain/candidates", methods=['GET'])
+@app.route("/blockchain/results", methods=['GET'])
 def result():
     # Create the contract instance with the newly-deployed address
-    
-    candidate_id = request.args.get(["candidate_id"])
-    
+    results = []
     election = w3.eth.contract(address=contract_address, abi=abi)
-    
-    count = election.functions.totalVotesFor(Web3.toHex(str.encode(candidate_id))).call()
-    
-    return json.dumps({candidate_id:count}), 200
+    for candidate in Candidate.query.all():
+        c_dict = candidate.serialize()
+        c_dict["votes"] = election.functions.totalVotesFor(
+                Web3.toHex(
+                        str.encode(
+                                str(c_dict["id"])
+                                )
+                        )
+                        ).call()
+                        
+        results.append(c_dict)
+        
+    return json.dumps({"result":results}), 200
 
 
 @app.route("/blockchain/vote", methods=['POST'])
@@ -69,12 +76,13 @@ def vote():
     candidate_id = request.form["candidate_id"]
     election = w3.eth.contract(address=contract_address, abi=abi)
     
-    tx_hash = election.functions.voteForCandidate(Web3.toHex(str.encode(candidate_id))).transact()
-    
-    #receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-
-    #sending transaction hash as receipt
-    return json.dumps({"receipt": tx_hash.hex()}), 200
+    try:
+        tx_hash = election.functions.voteForCandidate(Web3.toHex(str.encode(candidate_id))).transact()
+        #receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+        #sending transaction hash as receipt
+        return json.dumps({"receipt": tx_hash.hex()}), 200
+    except:
+        return "",403
 
 
 @app.route('/')
