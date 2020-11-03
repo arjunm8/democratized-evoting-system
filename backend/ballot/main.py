@@ -15,7 +15,7 @@ import json
 import traceback
 import requests
 
-blockchain_service_url = "http://127.0.0.1:5006/blockchain/vote"
+blockchain_service_url = "http://0.0.0.0:5006/blockchain/vote"
 
 
 app = Flask(__name__)
