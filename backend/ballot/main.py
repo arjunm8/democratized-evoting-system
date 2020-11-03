@@ -10,7 +10,7 @@ import logging
 # Imports the Google Cloud client library
 
 from flask import Flask, request
-from models import db, Ballot
+from models import db, Ballot,Candidate
 import json
 import traceback
 import requests
@@ -58,6 +58,23 @@ def get_ballot_object(id):
     if ballot:
         ballot = ballot.serialize()
         return json.dumps(ballot)
+    else:
+        return "",404
+
+
+
+@app.route('/candidates', methods=["GET"])
+def list_constituencies():
+    '''
+    list available constituencies
+    callers: all users
+    '''
+    candidates = Candidate.query.all()
+
+    if candidates:
+        candidate_list = [candidate.serialize() for candidate in candidates]
+
+        return json.dumps(candidate_list)
     else:
         return "",404
 
